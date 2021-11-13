@@ -1,12 +1,59 @@
-<!DOCTYPE html>
-<html lang="english" dir="ltr">
+<!doctype html>
+<html lang="en" ng-app="weatherApp">
   <head>
     <meta charset="utf-8">
-    <title>Edo</title>
+    <title>World Weather</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+    <link rel="stylesheet" type="text/css" href="css/loading-bar.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="app.js"></script>
   </head>
-  <body>
-    <h1>Heading</h1>
-    <p>First para</p>
-    <p><i>How are you doing</i></p>
+  <body ng-controller="weatherControl" style="background-image: url('clouds.jpg');">
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container navbar-header">
+          <a style="margin-left:40%" class="navbar-brand">World Weather</a>
+      </div>
+    </nav>
+        <div role="main" class="container theme-showcase">
+      <div class="" style="margin-top:90px;">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a style="margin-left:20%;width:1000px;"  class="navbar-brand">Weather for each country</a>
+                </div>
+            </div>
+        </nav>
+      </div>
+    </div>
+    <section>
+      <table id='table'>
+          <tr>
+              <th><h2>Country</h2></th>
+              <th><h2>Weather</h2></th>
+          </tr>
+          <script>
+              $(document).ready(function () {
+                  $.getJSON("details.json",  function (data) {
+                      var x = '';
+                      var data2 = data.data;
+                      $.each(data2, function (key, value) {
+                        var search = 'https://api.openweathermap.org/data/2.5/weather?q='+value.cities[0]+'&appid=794ee95e63c5a32aaf88cd813fa2e425';
+                          x += '<tr>';
+                          x += '<td><h3>' + value.country + '</h3></td>';
+                          x+='<td>'+'<a href = https://api.openweathermap.org/data/2.5/weather?q='+value.cities[0]+'&appid=794ee95e63c5a32aaf88cd813fa2e425>'+'<h3 style="color:darkblue">'+value.cities[0]+'</h3>'+'</a>'+'</td>';
+
+                          // below function is not getting executed, don't know why
+
+                          // x+='<td>'+ '<input type = "button" onclick = "'+func(search)+'" value = "Message Print">' + '</td>';
+                          x+='</tr>';
+                      });
+                      $('#table').append(x);
+                  });
+              });
+          </script>
+        </table>
+    </section>
   </body>
 </html>
